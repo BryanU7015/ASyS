@@ -1,0 +1,671 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Practica 1: Se&ntilde;ales en tiempo continuo</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-02-14"><meta name="DC.source" content="practica01.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Practica 1: Se&ntilde;ales en tiempo continuo</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Integrantes:</a></li><li><a href="#2">Objetivos:</a></li><li><a href="#3">Introduccion:</a></li><li><a href="#8">Desarrollo:</a></li></ul></div><h2 id="1">Integrantes:</h2><pre>- Espa&ntilde;a Perez Bryan Uriel
+- Islas Martinez Cesar
+- Olivares Quezada Yahdiel</pre><h2 id="2">Objetivos:</h2><pre>* Manipulaci&oacute;n b&aacute;sica de MATLAB</pre><pre>* Gr&aacute;ficas de se&ntilde;ales reales y complejas continuas</pre><pre>* Transformaci&oacute;n de se&ntilde;ales continuas (escalamientos y traslaciones)</pre><pre>* Calculo de energ&iacute;a y potencia de se&ntilde;ales continuas</pre><h2 id="3">Introduccion:</h2><p>Historia de MATLAB MATLAB nace como una soluci&oacute;n a la necesidad de mejores y mas poderosas herramientas de calculo para resolver problemas de calculo complejos en los que es necesario aprovechas las amplias capacidades de proceso de datos de grandes computadores. El nombre MATLAB viene de "matrix laboratory" (laboratorio matricial). MATLAB fue originalmente escrito para proveer acceso f&aacute;cil al software matricial desarrollado por los proyectos LINPACK y EISPACK, que juntos  representan el estado del arte e software para computaci&oacute;n matricial. Hoy MATLAB es usado en una variedad de &aacute;reas de aplicaci&oacute;n incluyendo procesamiento de se&ntilde;ales e im&aacute;genes, dise&ntilde;o de sistemas de control, ingenier&iacute;a financiera e investigaci&oacute;n m&eacute;dica. La arquitectura abierta facilita usar MATLAB y los productos que lo acompa&ntilde;an para explorar datos y crear herramientas personalizadas que proveen visiones profundas empranas y ventajas competitivas.</p><p>Otras alternativas:</p><p>Octave  es un programa y lenguaje de programaci&oacute;n para realizar c&aacute;lculos num&eacute;ricos. Como su nombre indica, Octave es parte  del proyecto GNU. Es considerado el equivalente libre de MATLAB. Entre varias caracter&iacute;sticas que comparten, se puede  destacar que ambos ofrecen un int&eacute;rprete, permitiendo ejecutar &oacute;rdenes en modo interactivo. N&oacute;tese que Octave no es un  sistema de &aacute;lgebra computacional, lo es Maxima, sino que est&aacute; orientado al an&aacute;lisis num&eacute;rico.  El proyecto fue creado alrededor del a&ntilde;o 1988, pero con una finalidad diferente: ser utilizado en un curso de dise&ntilde;o de  reactores qu&iacute;micos.  Posteriormente, en el a&ntilde;o 1992, se decidi&oacute; extenderlo, y comenz&oacute; su desarrollo a cargo de John W. Eaton.1&#8203; La primera  versi&oacute;n alpha fue lanzada el 4 de enero de 1993. Un a&ntilde;o m&aacute;s tarde, el 17 de febrero de 1994, apareci&oacute; la versi&oacute;n 1.0.  El nombre surge de Octave Levenspiel, profesor de uno de los autores y conocido por sus buenas aproximaciones, por  medio de c&aacute;lculos elementales, a problemas num&eacute;ricos en ingenier&iacute;a qu&iacute;mica.</p><p>Detalles tecnicos:  * Octave est&aacute; escrito en C++ usando la biblioteca STL.  * Tiene un int&eacute;rprete de su propio lenguaje (de sintaxis casi id&eacute;ntica a Matlab), y permite una ejecuci&oacute;n interactiva o por lotes.  * Su lenguaje puede ser extendido con funciones y procedimientos, por medio de m&oacute;dulos din&aacute;micos.  * Utiliza otros programas GNU para ofrecer al usuario la posibilidad de crear gr&aacute;ficos para luego imprimirlos o guardarlos (Grace).  * Dentro del lenguaje tambi&eacute;n se comporta como una consola de &oacute;rdenes (shell). Esto permite listar contenidos de directorios, por ejemplo.  * Adem&aacute;s de correr en plataformas Unix tambi&eacute;n lo hace en Windows.  * Puede cargar archivos con funciones de Matlab (reconocibles por la extensi&oacute;n .m).  * Tiene ayuda en espa&ntilde;ol. Fuente: <a href="https://es.wikipedia.org/wiki/MATLAB">https://es.wikipedia.org/wiki/MATLAB</a></p><p>El lenguaje Octave:  * La sintaxis es casi id&eacute;ntica a la utilizada en MATLAB.  * Es un lenguaje interpretado.  * No permite pasar argumentos por referencia. Siempre son pasados por valor.  * No permite punteros.  * Se pueden generar scripts.  * Soporta gran parte de las funciones de la biblioteca est&aacute;ndar de C.  * Puede ser extendido para ofrecer compatibilidad con las llamadas al sistema UNIX.  * El lenguaje est&aacute; pensado para trabajar con matrices, y provee mucha funcionalidad para trabajar con estas.  * Soporta estructuras similares a los "struct"s de C.  * Disponde de un entorno de desarrollo integrado y se han desarrollado otros para ense&ntilde;ar a programar, como ToolboX. Al ser su licencia Licencia p&uacute;blica general de GNU, puede ser compartido y utilizado libremente. Fuente: <a href="https://es.wikipedia.org/wiki/GNU_Octave">https://es.wikipedia.org/wiki/GNU_Octave</a></p><p>Python:  Python es un lenguaje de programaci&oacute;n interpretado cuya filosof&iacute;a hace hincapi&eacute; en la legibilidad de su c&oacute;digo.  Se trata de un lenguaje de programaci&oacute;n multiparadigma, ya que soporta orientaci&oacute;n a objetos, programaci&oacute;n imperativa y, en menor medida,  programaci&oacute;n funcional. Es un lenguaje interpretado, din&aacute;mico y multiplataforma. Es administrado por la Python Software Foundation.  Posee una licencia de c&oacute;digo abierto, denominada Python Software Foundation License,2&#8203; que es compatible con la Licencia p&uacute;blica general de  GNU a partir de la versi&oacute;n 2.1.1, e incompatible en ciertas versiones anteriores.</p><pre>Python fue creado a finales de los ochenta3&#8203; por Guido van Rossum en el Centro para las Matem&aacute;ticas y la Inform&aacute;tica (CWI, Centrum Wiskunde
+&amp; Informatica), en los Pa&iacute;ses Bajos, como un sucesor del lenguaje de programaci&oacute;n ABC, capaz de manejar excepciones e interactuar con el
+sistema operativo Amoeba.4&#8203;
+El nombre del lenguaje proviene de la afici&oacute;n de su creador por los humoristas brit&aacute;nicos Monty Python.5&#8203; Van Rossum es el principal autor
+de Python, y su continuo rol central en decidir la direcci&oacute;n de Python es reconocido, refiri&eacute;ndose a &eacute;l como Benevolente Dictador Vitalicio
+(en ingl&eacute;s: Benevolent Dictator for Life, BDFL); sin embargo el 12 de julio de 2018 declin&oacute; de dicha situaci&oacute;n de honor sin dejar un sucesor
+o sucesora y con una declaraci&oacute;n altisonante.</pre><pre>Python es un lenguaje de programaci&oacute;n multiparadigma. Esto significa que m&aacute;s que forzar a los programadores a adoptar un estilo particular
+de programaci&oacute;n, permite varios estilos: programaci&oacute;n orientada a objetos, programaci&oacute;n imperativa y programaci&oacute;n funcional.
+Otros paradigmas est&aacute;n soportados mediante el uso de extensiones.
+Python usa tipado din&aacute;mico y conteo de referencias para la administraci&oacute;n de memoria. Una caracter&iacute;stica importante de Python es la
+resoluci&oacute;n din&aacute;mica de nombres; es decir, lo que enlaza un m&eacute;todo y un nombre de variable durante la ejecuci&oacute;n del programa (tambi&eacute;n
+llamado enlace din&aacute;mico de m&eacute;todos).
+Otro objetivo del dise&ntilde;o del lenguaje es la facilidad de extensi&oacute;n. Se pueden escribir nuevos m&oacute;dulos f&aacute;cilmente en C o C++. Python puede
+incluirse en aplicaciones que necesitan una interfaz programable.
+Aunque la programaci&oacute;n en Python podr&iacute;a considerarse en algunas situaciones hostil a la programaci&oacute;n funcional tradicional del Lisp, existen
+bastantes analog&iacute;as entre Python y los lenguajes minimalistas de la familia Lisp como puede ser Scheme.
+Fuente: &lt;https://es.wikipedia.org/wiki/Python&gt;</pre><h2 id="8">Desarrollo:</h2><pre class="language-matlab">*Problema 1:*
+ Realiza <span class="string">las</span> <span class="string">mismas</span> <span class="string">operaciones</span> <span class="string">que</span> <span class="string">Lathi</span> <span class="string">en</span> <span class="string">las</span> <span class="string">secciones</span> <span class="string">M1.1</span> <span class="string">a</span> <span class="string">M1.4</span> <span class="string">que</span> <span class="string">se</span> <span class="string">encuentra</span> <span class="string">al</span> <span class="string">final</span> <span class="string">del</span> <span class="string">cap&iacute;tulo</span> <span class="string">1</span> <span class="string">y</span> <span class="string">antes</span> <span class="string">de</span> <span class="string">la</span> <span class="string">secci&oacute;n</span> <span class="string">de</span>
+ problemas, cambie <span class="string">los</span> <span class="string">inline</span> <span class="string">por</span> <span class="string">funciones</span> <span class="string">anonimas.</span>
+</pre><pre class="codeinput"><span class="comment">%M1.1 Inline Functions</span>
+f = @(t) (exp(-t).* cos(2*pi*t))
+f(0)
+t = (-2:2);
+f(t)
+plot(t,f(t), <span class="string">'Color'</span>,<span class="string">'b'</span>,<span class="string">'LineStyle'</span>,<span class="string">':'</span>);
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'f(t)'</span>);
+grid <span class="string">on</span>;
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+t = (-2:0.01:2);
+plot(t,f(t),<span class="string">'Color'</span>,<span class="string">'r'</span>,<span class="string">'LineStyle'</span>,<span class="string">'--'</span>);
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'f(t)'</span>);
+grid <span class="string">on</span>;
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+<span class="comment">%</span>
+<span class="comment">%M1.2 Relational Operators and the Unit Step Function</span>
+u = @(t) (t&gt;0)
+t = (-2:2);
+plot (t,u(t) , <span class="string">'Color'</span>, <span class="string">'r'</span>, <span class="string">"LineStyle"</span>,<span class="string">"--"</span>,<span class="string">"LineWidth"</span>, 0.7);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'u(t)'</span>);
+t = (-2:0.01:2);
+plot (t,u(t), <span class="string">'Color'</span>, <span class="string">'m'</span>, <span class="string">"LineStyle"</span>,<span class="string">"-"</span>,<span class="string">"LineWidth"</span>, 0.8 );
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'u(t)'</span>);
+axis ([-2 2 -0.1 1.1]);
+p = @(t) (t&gt;=0) &amp; (t&lt;1)
+t = (-1:0.01:2);
+plot(t,p(t), <span class="string">'Color'</span>,<span class="string">'c'</span>, <span class="string">"LineStyle"</span>,<span class="string">"-."</span>, <span class="string">"LineWidth"</span>, 0.9);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'p(t) = u(t)-u(t-1)'</span>);
+axis ([-1 2 -.1 1.1]);
+<span class="comment">%</span>
+<span class="comment">%M1.3 Visualizing Operations on the Independent Variable</span>
+g = @(t) exp(-t).*cos(2*pi*t).*(t&gt;=0)
+<span class="comment">%g(t) = exp(-t).*cos(2*pi*t).*(t&gt;=0)</span>
+t = (-2:0.01:2);
+plot(t,g(2*t+1),<span class="string">'Color'</span>, <span class="string">'r'</span>, <span class="string">"LineStyle"</span>,<span class="string">"-"</span>,<span class="string">"LineWidth"</span>, 1);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'g(2t+1)'</span>);
+grid <span class="string">on</span>;
+plot(t,g(-t+1), <span class="string">'Color'</span>, <span class="string">'b'</span>, <span class="string">"LineStyle"</span>,<span class="string">"--"</span>,<span class="string">"LineWidth"</span>, 1.1);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'g(-t+1)'</span>);
+grid <span class="string">on</span>;
+plot(t,g(2*t+1) +g(-t+1), <span class="string">'Color'</span>, <span class="string">'m'</span>, <span class="string">"LineStyle"</span>,<span class="string">":"</span>,<span class="string">"LineWidth"</span>, 1.2);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+xlabel(<span class="string">'t'</span>);
+ylabel(<span class="string">'h(t)'</span>);
+grid <span class="string">on</span>;
+<span class="comment">%</span>
+<span class="comment">%M1.4 Numerical Integration and Estimating Signal Energy</span>
+x = @(t) exp(-t).*((t&gt;=0)&amp;(t&lt;1));
+t = (0:0.01:1);
+E_x1 =sum(x(t).*x(t)*0.01);
+x_squared = @(t) exp(-2*t).*((t&gt;=0)&amp;(t&gt;1));
+E_x = integral(x_squared,0,1);
+g_squared = @(t) exp(-2*t).*(cos(2*pi*t).^2).*(t&gt;=0);
+t = (0:0.001:100);
+E_g1 = sum(g_squared(t)*0.001);
+E_g = integral(g_squared, 0,100);
+<span class="comment">%</span>
+<span class="comment">% *Problema 2:*</span>
+<span class="comment">%  Resuelve el problema 1.2.2 usando las herramientas del paso anterior.</span>
+<span class="comment">%</span>
+<span class="comment">% Problema 1.2.2</span>
+<span class="comment">% Se dividio la figura en dos partes:</span>
+<span class="comment">% - La parte izquierda</span>
+z = @(t) (-t .* heaviside(t + 4)).*(heaviside(-t));
+<span class="comment">% - La parte derecha</span>
+y = @(t)   (t .* heaviside(t)) .* (heaviside(-t +2));
+<span class="comment">% Rango de t</span>
+t = (-10:0.1:10);
+<span class="comment">% Se&ntilde;al completa original</span>
+x = @(t) z(t) + y(t);
+figure
+<span class="comment">% Se&ntilde;al original</span>
+plot (t, x(t) , <span class="string">'color'</span>, <span class="string">'c'</span>, <span class="string">"LineWidth"</span>, 1.5 );
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+<span class="comment">% a) x(t-4)</span>
+xa = @(t) (z(t-4) + y(t-4)) ;
+figure
+plot (t, xa(t) , <span class="string">'color'</span>, <span class="string">'g'</span>, <span class="string">"LineStyle"</span> ,  <span class="string">'-'</span> , <span class="string">"LineWidth"</span>, 1.5);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+<span class="comment">% b) x(t/1.5)</span>
+xb = @(t) (z(t/1.5) + y(t/1.5)) ;
+figure
+plot (t, xb(t) , <span class="string">'color'</span>, <span class="string">'m'</span>, <span class="string">"LineStyle"</span> ,  <span class="string">'--'</span> , <span class="string">"LineWidth"</span>, 1.5);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+<span class="comment">% c) x(-t)</span>
+xc = @(t) (z(-t) + y(-t)) ;
+figure
+plot (t, xc(t) , <span class="string">'color'</span>, <span class="string">'r'</span> , <span class="string">"LineStyle"</span> , <span class="string">':'</span>, <span class="string">"LineWidth"</span>, 1.5);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+<span class="comment">% d) x(2t - 4)</span>
+xd = @(t) (z((2.*t)-4) + y((2.*t)-4)) ;
+figure
+plot (t, xd(t) , <span class="string">'color'</span>, <span class="string">'b'</span> , <span class="string">"LineStyle"</span> , <span class="string">':'</span> , <span class="string">"LineWidth"</span>, 1.5);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+<span class="comment">% e) x(2 - t)</span>
+xe = @(t) (z(2-t) + y(2-t)) ;
+figure
+plot (t, xe(t) , <span class="string">'color'</span>, <span class="string">'k'</span> , <span class="string">"LineStyle"</span> , <span class="string">'-.'</span> , <span class="string">"LineWidth"</span>, 1.5);
+ax = gca;
+ax.XAxisLocation = <span class="string">'origin'</span>;
+ax.YAxisLocation = <span class="string">'origin'</span>;
+ax.Box = <span class="string">'off'</span>;
+grid <span class="string">on</span>;
+figure
+</pre><pre class="codeoutput">
+f =
+
+  function_handle with value:
+
+    @(t)(exp(-t).*cos(2*pi*t))
+
+
+ans =
+
+     1
+
+
+ans =
+
+    7.3891    2.7183    1.0000    0.3679    0.1353
+
+
+u =
+
+  function_handle with value:
+
+    @(t)(t&gt;0)
+
+
+p =
+
+  function_handle with value:
+
+    @(t)(t&gt;=0)&amp;(t&lt;1)
+
+
+g =
+
+  function_handle with value:
+
+    @(t)exp(-t).*cos(2*pi*t).*(t&gt;=0)
+
+</pre><p><b>Problema 3:</b>  Construya una funci&oacute;n que gr&aacute;fique funciones de <img src="practica01_eq02145986785580767623.png" alt="$f:R\rightarrow R$"> en el formato de su elecci&oacute;n y pruebe su c&oacute;digo para mostrar las  gr&aacute;ficas de magnitud y fase para las f&oacute;rmulas 1, 2 y 3 de la tabla que se encuentra en al secci&oacute;n de tranformada de Fourier de la  siguiente p&aacute;gina <a href="http://rafneta.github.io/Notas/NotasSyS/index.html">http://rafneta.github.io/Notas/NotasSyS/index.html</a> con valores de a=1/2 y n = 2. El rango de la varible se deja  a criterio.</p><pre>Tomando en cuenta</pre><pre class="codeinput">a=1/2;
+n=2;
+t=-10:0.01:10;
+</pre><pre>Formula 1</pre><pre>La formula n&deg; 1 es exp(-at)u(t) la cual se expresa como:</pre><pre class="codeinput">f1=@(t) exp(-a*t).*(t&gt;=0);
+</pre><img vspace="5" hspace="5" src="practica01_07.png" alt=""> <pre>Su transformada de Fourier es:</pre><pre class="codeinput">F1=@(w) 1./(w*j+a);
+</pre><pre>Por lo que las graficas de la formula 1 junto con las de magnitud y fase
+de su transformada de Fourier son respectivamente</pre><pre class="codeinput">Grafica(t,f1(t))
+</pre><img vspace="5" hspace="5" src="practica01_08.png" alt=""> <pre class="codeinput">Grafica(t,abs(F1(t)))
+</pre><img vspace="5" hspace="5" src="practica01_09.png" alt=""> <pre class="codeinput">Grafica(t,angle(F1(t)))
+</pre><img vspace="5" hspace="5" src="practica01_10.png" alt=""> <pre>Formula 2</pre><pre>La formula n&deg; 1 es exp(-at)u(t) la cual se expresa como:</pre><pre class="codeinput">f2=@(t) t.*exp(-a*t).*(t&gt;=0);
+</pre><pre>Su transformada de Fourier es:</pre><pre class="codeinput">F2=@(w) 1./(w*j+a).^2;
+</pre><pre>Por lo que las graficas de la formula 1 junto con las de magnitud y fase
+de su transformada de Fourier son respectivamente</pre><pre class="codeinput">Grafica(t,f2(t))
+</pre><img vspace="5" hspace="5" src="practica01_11.png" alt=""> <pre class="codeinput">Grafica(t,abs(F2(t)))
+</pre><img vspace="5" hspace="5" src="practica01_12.png" alt=""> <pre class="codeinput">Grafica(t,angle(F2(t)))
+</pre><img vspace="5" hspace="5" src="practica01_13.png" alt=""> <pre>Formula 3</pre><pre>La formula n&deg; 1 es exp(-at)u(t) la cual se expresa como:</pre><pre class="codeinput">f3=@(t) (t.^n).*exp(-a*t).*(t&gt;0);
+</pre><pre>Su transformada de Fourier es:</pre><pre class="codeinput">F3=@(w) factorial(n)./(w*j+a).^(n+1);
+</pre><pre>Por lo que las graficas de la formula 1 junto con las de magnitud y fase
+de su transformada de Fourier son respectivamente</pre><pre class="codeinput">Grafica(t,f3(t))
+</pre><img vspace="5" hspace="5" src="practica01_14.png" alt=""> <pre class="codeinput">Grafica(t,abs(F3(t)))
+</pre><img vspace="5" hspace="5" src="practica01_15.png" alt=""> <pre class="codeinput">Grafica(t,angle(F3(t)))
+</pre><img vspace="5" hspace="5" src="practica01_16.png" alt=""> <p><b>Problema 4:</b>  Construya una funci&oacute;n que gr&aacute;fique funciones de <img src="practica01_eq07287922491706758619.png" alt="$f:R\rightarrow R^2$"> en el formato de su elecci&oacute;n y pruebe su c&oacute;digo para mostrar  las gr&aacute;ficas de las f&oacute;rmulas 1, 2 y 3 de la tabla que se encuentra en al secci&oacute;n de tranformada de Fourier de la siguiente p&aacute;gina  <a href="http://rafneta.github.io/Notas/NotasSyS/index.html">http://rafneta.github.io/Notas/NotasSyS/index.html</a> con valores de a=1/2 y n = 2. El rango de la varible se deja a criterio.</p><pre>Para el desarrollo de esta seccion se utilizaran las funciones F1, F2,
+F3 que ya se declararon en el Problema 3, funciones cuyas graficas son
+las siguientes respectivamente:</pre><pre class="codeinput">Grafica3D(t,real(F1(t)),imag(F1(t)))
+</pre><img vspace="5" hspace="5" src="practica01_17.png" alt=""> <img vspace="5" hspace="5" src="practica01_18.png" alt=""> <img vspace="5" hspace="5" src="practica01_19.png" alt=""> <img vspace="5" hspace="5" src="practica01_20.png" alt=""> <img vspace="5" hspace="5" src="practica01_21.png" alt=""> <pre class="codeinput">Grafica3D(t,real(F2(t)),imag(F2(t)))
+</pre><img vspace="5" hspace="5" src="practica01_22.png" alt=""> <pre class="codeinput">Grafica3D(t,real(F3(t)),imag(F3(t)))
+</pre><img vspace="5" hspace="5" src="practica01_23.png" alt=""> <p><b>Problema 5:</b>  Construya una app que permita   - Gr&aacute;ficar se&ntilde;ales en tiempo continuo reales, el usuario ingresa la definici&oacute;n de la se&ntilde;al en el formato especifico   - El usuario puede definir el intervalo de la gr&aacute;fica   - El usuario puede seleccionar el tipo de transformaci&oacute;n (horizontal, vertical o combinaci&oacute;n) que desee realizar a la se&ntilde;al, la app debera mostrar la grafica de esta transformaci&oacute;n. Puede consultar los ejemplos preconstruidos que le puedan ser de utilidad.   - Se adjunta una imagen de la app a la pr&aacute;ctica, un enlace a la app en MATLAB online (drive), y el archivo de la app</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Practica 1: Señales en tiempo continuo
+%
+%
+%% Integrantes:
+%
+%  - España Perez Bryan Uriel
+%  - Islas Martinez Cesar
+%  - Olivares Quezada Yahdiel
+%% Objetivos:
+%  
+%  * Manipulación básica de MATLAB
+%
+%  * Gráficas de señales reales y complejas continuas
+%
+%  * Transformación de señales continuas (escalamientos y traslaciones)
+%
+%  * Calculo de energía y potencia de señales continuas
+%
+%% Introduccion:
+%%
+% Historia de MATLAB
+% MATLAB nace como una solución a la necesidad de mejores y mas poderosas herramientas de calculo para resolver problemas de
+% calculo complejos en los que es necesario aprovechas las amplias capacidades de proceso de datos de grandes computadores.
+% El nombre MATLAB viene de "matrix laboratory" (laboratorio matricial). MATLAB fue originalmente escrito para proveer
+% acceso fácil al software matricial desarrollado por los proyectos LINPACK y EISPACK, que juntos  representan el estado del arte e
+% software para computación matricial. Hoy MATLAB es usado en una variedad de áreas de aplicación incluyendo procesamiento
+% de señales e imágenes, diseño de sistemas de control, ingeniería financiera e investigación médica. La arquitectura abierta facilita
+% usar MATLAB y los productos que lo acompañan para explorar datos y crear herramientas personalizadas que proveen visiones profundas
+% empranas y ventajas competitivas.
+%%
+% Otras alternativas:
+
+%%
+% Octave
+%  es un programa y lenguaje de programación para realizar cálculos numéricos. Como su nombre indica, Octave es parte
+%  del proyecto GNU. Es considerado el equivalente libre de MATLAB. Entre varias características que comparten, se puede 
+%  destacar que ambos ofrecen un intérprete, permitiendo ejecutar órdenes en modo interactivo. Nótese que Octave no es un 
+%  sistema de álgebra computacional, lo es Maxima, sino que está orientado al análisis numérico.
+%  El proyecto fue creado alrededor del año 1988, pero con una finalidad diferente: ser utilizado en un curso de diseño de
+%  reactores químicos.
+%  Posteriormente, en el año 1992, se decidió extenderlo, y comenzó su desarrollo a cargo de John W. Eaton.1​ La primera 
+%  versión alpha fue lanzada el 4 de enero de 1993. Un año más tarde, el 17 de febrero de 1994, apareció la versión 1.0.
+%  El nombre surge de Octave Levenspiel, profesor de uno de los autores y conocido por sus buenas aproximaciones, por 
+%  medio de cálculos elementales, a problemas numéricos en ingeniería química.
+%
+% Detalles tecnicos:
+%  * Octave está escrito en C++ usando la biblioteca STL.
+%  * Tiene un intérprete de su propio lenguaje (de sintaxis casi idéntica a Matlab), y permite una ejecución interactiva o por lotes.
+%  * Su lenguaje puede ser extendido con funciones y procedimientos, por medio de módulos dinámicos.
+%  * Utiliza otros programas GNU para ofrecer al usuario la posibilidad de crear gráficos para luego imprimirlos o guardarlos (Grace).
+%  * Dentro del lenguaje también se comporta como una consola de órdenes (shell). Esto permite listar contenidos de directorios, por ejemplo.
+%  * Además de correr en plataformas Unix también lo hace en Windows.
+%  * Puede cargar archivos con funciones de Matlab (reconocibles por la extensión .m).
+%  * Tiene ayuda en español.
+% Fuente: <https://es.wikipedia.org/wiki/MATLAB> 
+%
+% El lenguaje Octave:
+%  * La sintaxis es casi idéntica a la utilizada en MATLAB.
+%  * Es un lenguaje interpretado.
+%  * No permite pasar argumentos por referencia. Siempre son pasados por valor.
+%  * No permite punteros.
+%  * Se pueden generar scripts.
+%  * Soporta gran parte de las funciones de la biblioteca estándar de C.
+%  * Puede ser extendido para ofrecer compatibilidad con las llamadas al sistema UNIX.
+%  * El lenguaje está pensado para trabajar con matrices, y provee mucha funcionalidad para trabajar con estas.
+%  * Soporta estructuras similares a los "struct"s de C.
+%  * Disponde de un entorno de desarrollo integrado y se han desarrollado otros para enseñar a programar, como ToolboX.
+% Al ser su licencia Licencia pública general de GNU, puede ser compartido y utilizado libremente.
+% Fuente: <https://es.wikipedia.org/wiki/GNU_Octave> 
+%%
+% Python:
+%  Python es un lenguaje de programación interpretado cuya filosofía hace hincapié en la legibilidad de su código.
+%  Se trata de un lenguaje de programación multiparadigma, ya que soporta orientación a objetos, programación imperativa y, en menor medida, 
+%  programación funcional. Es un lenguaje interpretado, dinámico y multiplataforma. Es administrado por la Python Software Foundation. 
+%  Posee una licencia de código abierto, denominada Python Software Foundation License,2​ que es compatible con la Licencia pública general de
+%  GNU a partir de la versión 2.1.1, e incompatible en ciertas versiones anteriores.
+%
+%  Python fue creado a finales de los ochenta3​ por Guido van Rossum en el Centro para las Matemáticas y la Informática (CWI, Centrum Wiskunde
+%  & Informatica), en los Países Bajos, como un sucesor del lenguaje de programación ABC, capaz de manejar excepciones e interactuar con el 
+%  sistema operativo Amoeba.4​
+%  El nombre del lenguaje proviene de la afición de su creador por los humoristas británicos Monty Python.5​ Van Rossum es el principal autor 
+%  de Python, y su continuo rol central en decidir la dirección de Python es reconocido, refiriéndose a él como Benevolente Dictador Vitalicio
+%  (en inglés: Benevolent Dictator for Life, BDFL); sin embargo el 12 de julio de 2018 declinó de dicha situación de honor sin dejar un sucesor
+%  o sucesora y con una declaración altisonante.
+%
+%  Python es un lenguaje de programación multiparadigma. Esto significa que más que forzar a los programadores a adoptar un estilo particular 
+%  de programación, permite varios estilos: programación orientada a objetos, programación imperativa y programación funcional. 
+%  Otros paradigmas están soportados mediante el uso de extensiones.
+%  Python usa tipado dinámico y conteo de referencias para la administración de memoria. Una característica importante de Python es la 
+%  resolución dinámica de nombres; es decir, lo que enlaza un método y un nombre de variable durante la ejecución del programa (también 
+%  llamado enlace dinámico de métodos).
+%  Otro objetivo del diseño del lenguaje es la facilidad de extensión. Se pueden escribir nuevos módulos fácilmente en C o C++. Python puede 
+%  incluirse en aplicaciones que necesitan una interfaz programable.
+%  Aunque la programación en Python podría considerarse en algunas situaciones hostil a la programación funcional tradicional del Lisp, existen 
+%  bastantes analogías entre Python y los lenguajes minimalistas de la familia Lisp como puede ser Scheme.
+%  Fuente: <https://es.wikipedia.org/wiki/Python> 
+%
+%% Desarrollo:
+%%
+%   *Problema 1:* 
+%    Realiza las mismas operaciones que Lathi en las secciones M1.1 a M1.4 que se encuentra al final del capítulo 1 y antes de la sección de 
+%    problemas, cambie los inline por funciones anonimas.
+%M1.1 Inline Functions
+f = @(t) (exp(-t).* cos(2*pi*t))
+f(0)
+t = (-2:2);
+f(t)
+plot(t,f(t), 'Color','b','LineStyle',':');
+xlabel('t'); 
+ylabel('f(t)');
+grid on;
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+t = (-2:0.01:2);
+plot(t,f(t),'Color','r','LineStyle','REPLACE_WITH_DASH_DASH');
+xlabel('t'); 
+ylabel('f(t)');
+grid on;
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+%
+%M1.2 Relational Operators and the Unit Step Function
+u = @(t) (t>0)
+t = (-2:2);
+plot (t,u(t) , 'Color', 'r', "LineStyle","REPLACE_WITH_DASH_DASH","LineWidth", 0.7);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+xlabel('t'); 
+ylabel('u(t)');
+t = (-2:0.01:2);
+plot (t,u(t), 'Color', 'm', "LineStyle","-","LineWidth", 0.8 );
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+xlabel('t'); 
+ylabel('u(t)');
+axis ([-2 2 -0.1 1.1]);
+p = @(t) (t>=0) & (t<1)
+t = (-1:0.01:2); 
+plot(t,p(t), 'Color','c', "LineStyle","-.", "LineWidth", 0.9);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+xlabel('t'); 
+ylabel('p(t) = u(t)-u(t-1)');
+axis ([-1 2 -.1 1.1]);
+%
+%M1.3 Visualizing Operations on the Independent Variable
+g = @(t) exp(-t).*cos(2*pi*t).*(t>=0)
+%g(t) = exp(-t).*cos(2*pi*t).*(t>=0)
+t = (-2:0.01:2);
+plot(t,g(2*t+1),'Color', 'r', "LineStyle","-","LineWidth", 1);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+xlabel('t'); 
+ylabel('g(2t+1)');
+grid on;
+plot(t,g(-t+1), 'Color', 'b', "LineStyle","REPLACE_WITH_DASH_DASH","LineWidth", 1.1);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+xlabel('t'); 
+ylabel('g(-t+1)');
+grid on;
+plot(t,g(2*t+1) +g(-t+1), 'Color', 'm', "LineStyle",":","LineWidth", 1.2);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+xlabel('t'); 
+ylabel('h(t)'); 
+grid on;
+%
+%M1.4 Numerical Integration and Estimating Signal Energy
+x = @(t) exp(-t).*((t>=0)&(t<1));
+t = (0:0.01:1);
+E_x1 =sum(x(t).*x(t)*0.01);
+x_squared = @(t) exp(-2*t).*((t>=0)&(t>1));
+E_x = integral(x_squared,0,1);
+g_squared = @(t) exp(-2*t).*(cos(2*pi*t).^2).*(t>=0);
+t = (0:0.001:100);
+E_g1 = sum(g_squared(t)*0.001);
+E_g = integral(g_squared, 0,100);
+%
+% *Problema 2:* 
+%  Resuelve el problema 1.2.2 usando las herramientas del paso anterior.
+% 
+% Problema 1.2.2
+% Se dividio la figura en dos partes:
+% - La parte izquierda
+z = @(t) (-t .* heaviside(t + 4)).*(heaviside(-t));
+% - La parte derecha
+y = @(t)   (t .* heaviside(t)) .* (heaviside(-t +2));
+% Rango de t
+t = (-10:0.1:10);
+% Señal completa original
+x = @(t) z(t) + y(t);
+figure
+% Señal original
+plot (t, x(t) , 'color', 'c', "LineWidth", 1.5 );
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+% a) x(t-4)
+xa = @(t) (z(t-4) + y(t-4)) ;
+figure
+plot (t, xa(t) , 'color', 'g', "LineStyle" ,  '-' , "LineWidth", 1.5);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+% b) x(t/1.5)
+xb = @(t) (z(t/1.5) + y(t/1.5)) ;
+figure
+plot (t, xb(t) , 'color', 'm', "LineStyle" ,  'REPLACE_WITH_DASH_DASH' , "LineWidth", 1.5);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+% c) x(-t)
+xc = @(t) (z(-t) + y(-t)) ;
+figure
+plot (t, xc(t) , 'color', 'r' , "LineStyle" , ':', "LineWidth", 1.5);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+% d) x(2t - 4)
+xd = @(t) (z((2.*t)-4) + y((2.*t)-4)) ;
+figure
+plot (t, xd(t) , 'color', 'b' , "LineStyle" , ':' , "LineWidth", 1.5);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+% e) x(2 - t)
+xe = @(t) (z(2-t) + y(2-t)) ;
+figure
+plot (t, xe(t) , 'color', 'k' , "LineStyle" , '-.' , "LineWidth", 1.5);
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+grid on;
+figure
+%%
+% *Problema 3:*
+%  Construya una función que gráfique funciones de $f:R\rightarrow R$ en el formato de su elección y pruebe su código para mostrar las 
+%  gráficas de magnitud y fase para las fórmulas 1, 2 y 3 de la tabla que se encuentra en al sección de tranformada de Fourier de la 
+%  siguiente página <http://rafneta.github.io/Notas/NotasSyS/index.html> con valores de a=1/2 y n = 2. El rango de la varible se deja
+%  a criterio. 
+%
+%  Tomando en cuenta
+a=1/2;
+n=2;
+t=-10:0.01:10;
+%%
+%  Formula 1
+%
+%  La formula n° 1 es exp(-at)u(t) la cual se expresa como:
+f1=@(t) exp(-a*t).*(t>=0);
+%%
+%  Su transformada de Fourier es:
+F1=@(w) 1./(w*j+a);
+%%
+%  Por lo que las graficas de la formula 1 junto con las de magnitud y fase
+%  de su transformada de Fourier son respectivamente
+%%
+Grafica(t,f1(t))
+%%
+Grafica(t,abs(F1(t)))
+%%
+Grafica(t,angle(F1(t)))
+%%
+%  Formula 2
+%
+%  La formula n° 1 es exp(-at)u(t) la cual se expresa como:
+f2=@(t) t.*exp(-a*t).*(t>=0);
+%%
+%  Su transformada de Fourier es:
+F2=@(w) 1./(w*j+a).^2;
+%%
+%  Por lo que las graficas de la formula 1 junto con las de magnitud y fase
+%  de su transformada de Fourier son respectivamente
+%%
+Grafica(t,f2(t))
+%%
+Grafica(t,abs(F2(t)))
+%%
+Grafica(t,angle(F2(t)))
+%%
+%  Formula 3
+%
+%  La formula n° 1 es exp(-at)u(t) la cual se expresa como:
+f3=@(t) (t.^n).*exp(-a*t).*(t>0);
+%%
+%  Su transformada de Fourier es:
+F3=@(w) factorial(n)./(w*j+a).^(n+1);
+%%
+%  Por lo que las graficas de la formula 1 junto con las de magnitud y fase
+%  de su transformada de Fourier son respectivamente
+%%
+Grafica(t,f3(t))
+%%
+Grafica(t,abs(F3(t)))
+%%
+Grafica(t,angle(F3(t)))
+%%
+% *Problema 4:*
+%  Construya una función que gráfique funciones de $f:R\rightarrow R^2$ en el formato de su elección y pruebe su código para mostrar 
+%  las gráficas de las fórmulas 1, 2 y 3 de la tabla que se encuentra en al sección de tranformada de Fourier de la siguiente página
+%  <http://rafneta.github.io/Notas/NotasSyS/index.html> con valores de a=1/2 y n = 2. El rango de la varible se deja a criterio.
+%
+%  Para el desarrollo de esta seccion se utilizaran las funciones F1, F2,
+%  F3 que ya se declararon en el Problema 3, funciones cuyas graficas son
+%  las siguientes respectivamente:
+%
+Grafica3D(t,real(F1(t)),imag(F1(t)))
+%%
+Grafica3D(t,real(F2(t)),imag(F2(t)))
+%%
+Grafica3D(t,real(F3(t)),imag(F3(t)))
+%%
+% *Problema 5:*
+%  Construya una app que permita
+%   - Gráficar señales en tiempo continuo reales, el usuario ingresa la definición de la señal en el formato especifico
+%   - El usuario puede definir el intervalo de la gráfica
+%   - El usuario puede seleccionar el tipo de transformación (horizontal, vertical o combinación) que desee realizar a la señal, la app debera mostrar la grafica de esta transformación. Puede consultar los ejemplos preconstruidos que le puedan ser de utilidad.
+%   - Se adjunta una imagen de la app a la práctica, un enlace a la app en MATLAB online (drive), y el archivo de la app
+%
+%  
+##### SOURCE END #####
+--></body></html>
